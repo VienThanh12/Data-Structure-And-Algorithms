@@ -36,7 +36,7 @@ The worst case: O (n ^ 2)
 
 The idea of algorithm Quicksort is like Binary Search. 
 
-static void Quicksort(List<int> list, int low, int high)
+     static void Quicksort(List<int> list, int low, int high)
         {
             int i = low, j = high;
             int x = list[(low + high) / 2];
