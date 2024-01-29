@@ -28,3 +28,37 @@ int i = 0, min = 0;
             int temp = list[min];
             list[min] = list[i];
             list[i] = temp;
+
+
+### Quicksort
+Average time: O (n logn)
+The worst case: O (n ^ 2)
+
+The idea of algorithm Quicksort is like Binary Search. 
+
+static void Quicksort(List<int> list, int low, int high)
+        {
+            int i = low, j = high;
+            int x = list[(low + high) / 2];
+            do
+            {
+                while (list[i] < x)
+                    i++;
+
+                while (list[j] > x)
+                    j--;
+
+                if(i <= j)
+                {
+                    swap(list, i, j);
+                    i++;
+                    j--;
+                }
+
+            } while (i <= j);
+
+            if (low < j)
+                Quicksort(list, low, j);
+            if (i < high)
+                Quicksort(list, i, high);
+        }
