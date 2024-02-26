@@ -36,29 +36,22 @@ The worst case: O (n ^ 2)
 
 The idea of algorithm Quicksort is like Binary Search. 
 
-     static void Quicksort(List<int> list, int low, int high)
-        {
-            int i = low, j = high;
-            int x = list[(low + high) / 2];
-            do
-            {
-                while (list[i] < x)
-                    i++;
+  void quickSort(int a[], int left, int right) {
+	int i = left, j = right;
+	int pivot = a[left + rand() % (right - left)];
+	// chia dãy thành 2 phần
+	while (i <= j) {
+		while (a[i] < pivot) ++i;
+		while (a[j] > pivot) --j;
 
-                while (list[j] > x)
-                    j--;
+		if (i <= j) {
+			swap(a[i], a[j]);
+			++i;
+			--j;
+		}
+	}
+	// Gọi đệ quy để sắp xếp các nửa
+	if (left < j) quickSort(a, left, j);
+	if (i < right) quickSort(a, i, right);
+}
 
-                if(i <= j)
-                {
-                    swap(list, i, j);
-                    i++;
-                    j--;
-                }
-
-            } while (i <= j);
-
-            if (low < j)
-                Quicksort(list, low, j);
-            if (i < high)
-                Quicksort(list, i, high);
-        }
