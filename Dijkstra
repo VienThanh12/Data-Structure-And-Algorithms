@@ -1,0 +1,47 @@
+// Thuật toán Dijkstra dùng để giải quyết bài toán đường đi ngắn nhất một nguồn (Single-source shortest path), đồ thị trọng số không âm.
+/*
+Ý tưởng của thuật toán.
+Giống như thuật toán Bellman-Ford, thuật toán Dijkstra cũng tối ưu hóa đường đi bằng cách xét các cạnh , so sánh hai đường đi  sẵn có với đường đi .
+Thuật toán hoạt động bằng cách duy trì một tập hợp các đỉnh trong đó ta đã biết chắc chắn đường đi ngắn nhất. Mỗi bước, thuật toán sẽ chọn ra một đỉnh 
+mà chắc chắn sẽ không thể tối ưu hơn nữa, sau đó tiến hành tối ưu các đỉnh  khác dựa trên các cạnh  đi ra từ đỉnh . 
+Sau  bước, tất cả các đỉnh đều sẽ được chọn, và mọi đường đi tìm được sẽ là ngắn nhất.
+Cụ thể hơn, thuật toán sẽ duy trì đường đi ngắn nhất đến tất cả các đỉnh. 
+Ở mỗi bước, chọn đường đi  có tổng trọng số nhỏ nhất trong tất cả các đường đi đang được duy trì. Sau đó tiến hành tối ưu các đường đi  
+bằng cách thử kéo dài thành  như đã mô tả trên.
+*/
+
+const long long INF = 2000000000000000000LL;
+struct Edge{
+    int v;
+    long long w;
+};
+void dijkstra(int n, int S, vector<vector<Edge>> E, vector<long long> &D, vector<int> &trace) {
+    D.resize(n, INF);
+    trace.resize(n, -1);
+
+    vector<bool> P(n, 0);
+    D[S] = 0;
+
+    for (int i = 0; i < n; i++) {
+        int uBest; // tìm đỉnh u chưa dùng, có khoảng cách nhỏ nhất
+        long long Max = INF;
+        for (int u = 0; u < n; u++) {
+            if(D[u] < Max && P[u] == false) {
+                uBest = u;
+                Max = D[u];
+            }
+        }
+
+        // cải tiến các đường đi qua u
+        int u = uBest;
+        P[u] = true;
+        for(auto x : E[u]) {
+            int v = x.v;
+            long long w = x.w;
+            if(D[v] > D[u] + w) {
+                D[v] = D[u] + w;
+                trace[v] = u;
+            }
+        }
+    }
+}
